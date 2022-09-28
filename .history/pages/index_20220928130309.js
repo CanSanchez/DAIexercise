@@ -28,10 +28,7 @@ export default function Home() {
 
   return (
     <div>
-      <LoginForm 
-        loginState={loginState}
-        onLoginClick={()=>Login()}
-      />
+      <LoginForm />
     </div>
   )
 }

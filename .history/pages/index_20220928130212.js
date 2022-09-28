@@ -17,6 +17,19 @@ export default function Home() {
   
   const r = useRouter();
 
+  // const HandleButton = () => {
+  //   if (loginState === "before"){
+  //     setLoginState("during");
+  //   } 
+  //   else if (loginState === "during"){
+  //     setLoginState("after");
+  //   }
+  //   else if (loginState === "after"){
+  //     setLoginState("before");
+  //   } 
+    
+  // }
+
   const Login = async () => {
     setLoginState("during");
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -28,10 +41,11 @@ export default function Home() {
 
   return (
     <div>
-      <LoginForm 
-        loginState={loginState}
-        onLoginClick={()=>Login()}
-      />
+      <Button 
+        color={c} onClick={()=> Login()}>
+          {text}
+          {loginState==="during" && <Loader active/>}
+      </Button>
     </div>
   )
 }

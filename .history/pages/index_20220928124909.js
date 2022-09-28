@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import { Button } from 'semantic-ui-react';
-import LoginForm from '../components/LoginForm';
 
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -14,8 +13,35 @@ export default function Home() {
   //before, during and after
 
   const [loginState, setLoginState] = useState("before");
-  
+  var c = "blue";
+  var text = "Log In"
   const r = useRouter();
+
+  if (loginState === "before"){
+    c = "blue";
+    text = "Log In"
+  } 
+  else if (loginState === "during"){
+    c = "green";
+    text = "Loading"
+  }
+  else if (loginState === "after"){
+    text = "Logged In"
+    r.push("/dashboard");
+  }
+
+  const HandleButton = () => {
+    if (loginState === "before"){
+      setLoginState("during");
+    } 
+    else if (loginState === "during"){
+      setLoginState("after");
+    }
+    else if (loginState === "after"){
+      setLoginState("before");
+    } 
+    
+  }
 
   const Login = async () => {
     setLoginState("during");
@@ -28,10 +54,11 @@ export default function Home() {
 
   return (
     <div>
-      <LoginForm 
-        loginState={loginState}
-        onLoginClick={()=>Login()}
-      />
+      <Button 
+        color={c} onClick={()=> Login()}>
+          {text}
+          {loginState==="during" && <Loader active/>}
+      </Button>
     </div>
   )
 }
